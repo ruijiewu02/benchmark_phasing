@@ -123,8 +123,20 @@ benchmark_phasing/results/snakemake_running/PacBio_HiFi/results.HG00733.pacbio/
 └── final_phasing_output
 ```
 
-## *3. Use PIE to conduct phasing evaluation of different platforms*
+## 3. Use PIE to conduct phasing evaluation of different platforms
 
-## *4. Use PIE to condcut phasing evaluation at specific regions*
+After sequence alignment, variant calling (SNP, INDEL, and SV), and haplotype phasing, each phasing algorithm contains a phased VCF file.
+
+The phasing evaluation is performed with phased VCF file, the ground-truth VCF file, and a reference genome FASTA/FAI file.
+
+The detailed execution document is under the `results/evaluation/scripts` folder.
+
+## 4. Use PIE to condcut phasing evaluation at specific regions
+
+The phasing evaluation workflow not only includes the genome-wide level benchmarking, but also includes the region-specific level benchmarking.
+
+This analysis is achieved by PIE's region-specific phasing evaluation function.
+
+The detailed execution document is under the `results/clinical_gene/scirpts` folder.
 
 ## *5. Down-sampling process*
