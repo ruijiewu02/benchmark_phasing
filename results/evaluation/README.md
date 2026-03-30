@@ -1,11 +1,3 @@
-### This folder contains PIE evaulation results using different distance thresholds. 
+This folder contains phasing evaulation scripts and results with PIE.
 
-### 250kb is the default distance thresholds.
-
-### We need to update the weighted calcualtion version as soon as possible.
-
-### `merge_stats_csv.sh` and `merge_perchrom_csv.sh` are used to merge stats info and perchrom info together from all platforms, containing 250 samples in total.
-
-### `evaluation_PIE_200kb.sh` is used to evaluate the PIE results using 200kb as distance threshold, you can change the threshold and file dir by yourself.
-
-### If running PIE with different thresholds, please change the DIR or threshold in shell scripts.
+We not only benchmarked the phasing evaluation all types of variants but also restricted the workflow on SNPs.
