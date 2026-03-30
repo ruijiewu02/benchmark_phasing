@@ -139,4 +139,8 @@ This analysis is achieved by PIE's region-specific phasing evaluation function.
 
 The detailed execution document is under the `results/clinical_gene/scirpts` folder.
 
-## *5. Down-sampling process*
+## 5. Down-sampling process
+
+We performed down-sampling experiments to check the impact of sequencing depth.
+
+The detailed excution document is under the `results/downsamling/scripts` folder.
