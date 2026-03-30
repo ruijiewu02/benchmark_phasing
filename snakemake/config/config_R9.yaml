@@ -1,0 +1,65 @@
+# This is the config file of R9 data.
+PLATFORM: Nanopore_R9
+# FASTQ: 
+# OUTDIR: 
+# The above two keys are specified through command line.
+
+# The reference file. (GRCh38)
+REFERENCE: reference/GCA_000001405.15_GRCh38_no_alt_analysis_set.fa
+
+# sample name is extracted from FASTQ
+
+# rule minimap2_sequence_alignment: preset arguments of minimap2 and samtools
+# "map-hifi" for PacBio HiFi and "map-ont" for Nanopore R9 and "lr:hq" for Nanopore R10, change it with your need.
+MINIMAP2_PRESET: map-ont
+
+# rule clair3_small_variants_calling: preset arguments of clair3
+# "-p" argument defined the sequence type.  {ont, hifi}
+CLAIR3_PRESET_P: ont
+# "-m" argument defined the pre-train model of clair3.
+# pacbio sequel2 model: models/clair3/hifi_sequel2
+# The R9 model of clair3 here suits for Guppy5 and Guppy6 basecaller.
+# nanopore R9 model: models/clair3/r941_prom_sup_g5014
+# Change sup or hac in R10 data following with your need.(Sampling rate of HG002 and HG005 is 5kHz in my datasets.)
+# nanopore R10 model for HG002 and HG005: models/clair3/r1041_e82_400bps_hac_v500
+# nanopore R10 model for other samples: models/clair3/r1041_e82_400bps_hac_v410
+CLAIR3_PRESET_M: models/clair3/r941_prom_sup_g5014
+
+# rule cutesv_sv_calling: preset arguments of cutesv
+
+# For PacBio CLR data
+# --max_cluster_bias_INS        100 
+# --diff_ratio_merging_bias_INS 0.3
+# --max_cluster_bias_DEL        200
+# --diff_ratio_merging_DEL      0.5
+
+# For PacBio CCS(HIFI) data
+# --max_cluster_bias_INS         1000
+# --diff_ratio_merging_bias_INS  0.9
+# --max_cluster_bias_DEL         1000
+# --diff_ratio_merging_DEL       0.5
+
+# For ONT data
+# --max_cluster_bias_INS        100 
+# --diff_ratio_merging_bias_INS 0.3
+# --max_cluster_bias_DEL        100
+# --diff_ratio_merging_DEL      0.3
+
+MAX_CLUSTER_BIAS_INS: 100
+DIFF_RATIO_MERGING_INS: 0.3
+MAX_CLUSTER_BIAS_DEL: 100
+DIFF_RATIO_MERGING_DEL: 0.3
+
+# preset arguments of phasing algorithms HapCUT2
+# If pacbio, --pacbio; if nanopore, --ont.
+extractHAIRS_PRESET: --ont
+
+# preset arguments of phasing algorithms Margin
+Margin_MODEL_PREFIX: models/margin-2.3.1/params
+# pacbio model: phase/allParams.phase_vcf.pb-hifi.json
+# nanopore model: phase/allParams.phase_vcf.ont.json
+Margin_MODEL: phase/allParams.phase_vcf.ont.json
+
+# preset arguments of phasing algorithms LongPhase
+# If pacbio, --pb; if nanopore, --ont.
+LongPhase_PRESET: --ont

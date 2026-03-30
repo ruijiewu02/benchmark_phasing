@@ -1,0 +1,6 @@
+channels: 
+  - bioconda
+  - conda-forge
+  - defaults
+dependencies: 
+  - hapcut2=1.3.4

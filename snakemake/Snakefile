@@ -1,0 +1,66 @@
+configfile: "config/config_PacBio_HiFi.yaml"
+fastq=config["FASTQ"]
+outdir=config["OUTDIR"]
+sample=fastq.split("/")[-1].strip("fastq.gz")
+reference=config["REFERENCE"]
+reference_prefix=reference.rsplit("/", 1)[0]
+platform=config["PLATFORM"]
+if platform == "PacBio_HiFi": 
+    rule all: 
+        input:  
+            expand("{outdir}/results.{sample}/final_phasing_output/{sample}.WhatsHap.concated.variants.phased.vcf", outdir=outdir, sample=sample), 
+            expand("{outdir}/results.{sample}/final_phasing_output/{sample}.HapCUT2.concated.variants.phased.vcf", outdir=outdir, sample=sample), 
+            expand("{outdir}/results.{sample}/final_phasing_output/{sample}.Margin.concated.variants.phased.vcf", outdir=outdir, sample=sample), 
+            expand("{outdir}/results.{sample}/final_phasing_output/{sample}.LongPhase.concated.variants.phased.vcf", outdir=outdir, sample=sample), 
+            expand("{outdir}/results.{sample}/final_phasing_output/{sample}.HiPhase.concated.variants.phased.vcf", outdir=outdir, sample=sample)
+else: 
+    rule all: 
+        input:  
+            expand("{outdir}/results.{sample}/final_phasing_output/{sample}.WhatsHap.concated.variants.phased.vcf", outdir=outdir, sample=sample), 
+            expand("{outdir}/results.{sample}/final_phasing_output/{sample}.HapCUT2.concated.variants.phased.vcf", outdir=outdir, sample=sample), 
+            expand("{outdir}/results.{sample}/final_phasing_output/{sample}.Margin.concated.variants.phased.vcf", outdir=outdir, sample=sample), 
+            expand("{outdir}/results.{sample}/final_phasing_output/{sample}.LongPhase.concated.variants.phased.vcf", outdir=outdir, sample=sample)
+include: "rules/pipeline.smk"
+include: "rules/phasing.smk"
+
+if platform == "PacBio_HiFi": 
+    rule tidy_final_phased_vcf: 
+        input: 
+            "{outdir}/results.{sample}/07_02_WhatsHap_variants_phasing/{sample}.WhatsHap.concated.variants.phased.vcf", 
+            "{outdir}/results.{sample}/08_02_HapCUT2_variants_concat/{sample}.HapCUT2.concated.variants.vcf", 
+            "{outdir}/results.{sample}/09_02_Margin_variants_phasing/{sample}.Margin.concated.variants.phased.vcf", 
+            "{outdir}/results.{sample}/10_02_LongPhase_variants_concat/{sample}.LongPhase.concated.variants.vcf", 
+            "{outdir}/results.{sample}/11_03_HiPhase_variants_concat/{sample}.HiPhase.concated.variants.phased.vcf"
+        output: 
+            "{outdir}/results.{sample}/final_phasing_output/{sample}.WhatsHap.concated.variants.phased.vcf", 
+            "{outdir}/results.{sample}/final_phasing_output/{sample}.HapCUT2.concated.variants.phased.vcf", 
+            "{outdir}/results.{sample}/final_phasing_output/{sample}.Margin.concated.variants.phased.vcf", 
+            "{outdir}/results.{sample}/final_phasing_output/{sample}.LongPhase.concated.variants.phased.vcf", 
+            "{outdir}/results.{sample}/final_phasing_output/{sample}.HiPhase.concated.variants.phased.vcf"
+        shell: 
+            """
+            cp {input[0]} {output[0]}
+            cp {input[1]} {output[1]}
+            cp {input[2]} {output[2]}
+            cp {input[3]} {output[3]}
+            cp {input[4]} {output[4]}
+            """
+else: 
+    rule tidy_final_phased_vcf:
+        input: 
+            "{outdir}/results.{sample}/07_02_WhatsHap_variants_phasing/{sample}.WhatsHap.concated.variants.phased.vcf", 
+            "{outdir}/results.{sample}/08_02_HapCUT2_variants_concat/{sample}.HapCUT2.concated.variants.vcf", 
+            "{outdir}/results.{sample}/09_02_Margin_variants_phasing/{sample}.Margin.concated.variants.phased.vcf", 
+            "{outdir}/results.{sample}/10_02_LongPhase_variants_concat/{sample}.LongPhase.concated.variants.vcf", 
+        output: 
+            "{outdir}/results.{sample}/final_phasing_output/{sample}.WhatsHap.concated.variants.phased.vcf", 
+            "{outdir}/results.{sample}/final_phasing_output/{sample}.HapCUT2.concated.variants.phased.vcf", 
+            "{outdir}/results.{sample}/final_phasing_output/{sample}.Margin.concated.variants.phased.vcf", 
+            "{outdir}/results.{sample}/final_phasing_output/{sample}.LongPhase.concated.variants.phased.vcf", 
+        shell: 
+            """
+            cp {input[0]} {output[0]}
+            cp {input[1]} {output[1]}
+            cp {input[2]} {output[2]}
+            cp {input[3]} {output[3]}
+            """

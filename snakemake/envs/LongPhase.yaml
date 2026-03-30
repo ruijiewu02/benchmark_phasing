@@ -1,0 +1,6 @@
+channels: 
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies: 
+  - longphase=1.7.3

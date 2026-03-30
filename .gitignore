@@ -1,0 +1,28 @@
+### ignore FASTQ data folder
+data/*
+
+### ignore benchmarks data
+benchmarks/*.vcf
+benchmarks/*.vcf.gz
+
+### ignore reference genome data
+reference/*
+
+### ignore large files in snakemake folder
+snakemake/longphase_linux-x64
+snakemake/margin-2.3.1.tar.gz
+snakemake/margin_2.3.1.sif
+snakemake/pepper_deepvariant_r0.8.sif
+snakemake/reference
+snakemake/models
+snakemake/margin-2.3.1
+snakemake/.snakemake
+### ignore some results in results data
+results/snakemake_running
+results/evaluation/results/*
+results/downsampling/data/*
+results/downsampling/results/*
+results/FakePhase
+results/clinical_gene/results/*
+results/recessive_gene
+results/MHC/
