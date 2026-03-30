@@ -1,17 +1,18 @@
-# *This repository introduces the data analysis workflow of Phasing Evaluation.*
+# This repository introduces the data analysis workflow of Phasing Evaluation.
 
-## *1. Prepare your working environment with conda and download the datasets*
+## 1. Prepare your working environment with conda and download the datasets
 
-*First, you should keep your working environment with conda.*
-*Next, you should download the benchmarking datasets.*
+First, you should keep your working environment with `conda`.
 
-## *2. Data pre-process of raw signal*
+Next, you should download the benchmarking datasets. Details in `scripts/download_benchmarks.sh`.
 
-### *Transfer the downloaded signal data to `fastq` format.*
+## 2. Data pre-process of raw signal
 
-### *2.1 PacBio HiFi*
+You should transfer the downloaded signal data to `fastq` format.
 
-#### *2.1.1 `ccs.bam` transfer and concat to `fastq.gz`*
+### 2.1 PacBio HiFi datasets transfer
+
+#### 2.1.1 `ccs.bam` transfer and concat to `fastq.gz`
 ```sh
 for i in ${PATH}; do
 
@@ -26,29 +27,29 @@ for i in ${PATH}; do
 done
 ```
 
-#### *2.1.2 concat `fastq.gz`*
+#### 2.1.2 concat `fastq.gz`
 ```sh
-fastcat ${PATH}/*.fastq.gz -f ${PATH}/summary.txt | bgzip > ${PATH}/data/${sample}.pacbio.fastq.gz &
+fastcat ${PATH}/*.fastq.gz -f ${PATH}/summary.txt | bgzip > ${PATH}/data/${sample}.pacbio.fastq.gz
 ```
 
-### *2.2 Nanopore R9 and R10*
+### 2.2 ONT R9 and R10
 
-### *2.2.1 basecalling for `fast5`*
+### 2.2.1 basecalling for `fast5` in R9
 
-#### *2.2.1.1 `hdf5` conda env create*
+#### 2.2.1.1 `hdf5` conda env create
 ```sh
 conda create -n hdf5-env
 conda activate hdf5-env
 conda install -c anaconda hdf5
 ```
 
-#### *2.2.1.2 manually inspect the output of `fast5`*
+#### 2.2.1.2 manually inspect the output of `fast5`
 ```sh
 h5dump ${FAST5_FILE} | head -n 100000 | less
 ```
 
-#### *2.2.1.3 look for `ATTRIBUTE "flowcell_type"`, `ATTRIBUTE "sequencing_kit"`, and `ATTRIBUTE "exp_script_name"`* 
-#### *example:*
+#### 2.2.1.3 look for `ATTRIBUTE "flowcell_type"`, `ATTRIBUTE "sequencing_kit"`, and `ATTRIBUTE "exp_script_name"` 
+#### example:
 ```
 ATTRIBUTE "sequencing_kit" {
 DATATYPE H5T STRING (
@@ -63,31 +64,64 @@ DATATYPE H5T STRING (
 	}
 ```
 
-#### *2.2.1.4 Guppy Basecaller*
-#### *example:*
+#### 2.2.1.4 Guppy Basecaller (Version 6.5.7)
+#### example:
 ```
 config: dna_r9.4.1_450bps_sup_prom.cfg (R9 sup)
 ```
 
 ```sh
-nohup ${absolute_path_of_guppy_basecaller}/ont-guppy-6.5.7/bin/guppy_basecaller \
+${absolute_path_of_guppy_basecaller}/ont-guppy-6.5.7/bin/guppy_basecaller \
 -r -i ${PATH} -s ${PATH}/sup/basecalling_sup/ \
--c dna_r9.4.1_450bps_sup_prom.cfg -x cuda:0,1 &
+-c dna_r9.4.1_450bps_sup_prom.cfg -x cuda:0,1
 ```
 
-#### *2.2.1.5 `fastq` to `fastq.gz`*
+#### 2.2.1.5 `fastq` to `fastq.gz`
 ```sh
-nohup fastcat $PATH/hac/bascalling_sup/pass/*.fastq | bgzip > $PATH/data/${sample}.nanopore.R9.fastq.gz &
+fastcat $PATH/hac/bascalling_sup/pass/*.fastq | bgzip > $PATH/data/${sample}.nanopore.R9.fastq.gz
 ```
 
-### *2.2.2 basecalling for `pod5`*
+### 2.2.2 basecalling for `pod5`
 ```
 null now
 ```
 
 
+## 3. Use `snakemake` to deal with the upstream workflows of haplotype phasing
 
-## *2. Use snakemake to deal with the upstream workflows of haplotype phasing*
+### 3.1 environment perparation
+```sh
+conda create -n snakemake-env -c conda-forge -c bioconda snakemake singularity=3.8.6
+```
+
+### 3.2 command line
+for PacBio HiFi dataset and ONT dataset, we prepare different scripts to execute. Details in `scripts` folder.
+
+The output result file structure is as following.
+
+For nanopore dataset, no `HiPhase` associated file structure.
+```
+benchmark_phasing/results/snakemake_running/PacBio_HiFi/results.HG00733.pacbio/
+├── 01_minimap2_sequence_alignment
+├── 02_samtools_samfile_process
+├── 03_clair3_small_variants_calling
+├── 04_bcftools_small_variants_filtering
+├── 05_cutesv_structural_variants_calling
+├── 06_bash_structural_variants_filtering
+├── 07_01_WhatsHap_variants_concat
+├── 07_02_WhatsHap_variants_phasing
+├── 08_01_HapCUT2_variants_phasing
+├── 08_02_HapCUT2_variants_concat
+├── 09_01_Margin_variants_concat
+├── 09_02_Margin_variants_phasing
+├── 10_01_LongPhase_variants_phasing
+├── 10_02_LongPhase_variants_concat
+├── 11_01_HiPhase_variants_compressed
+├── 11_02_HiPhase_variants_phasing
+├── 11_03_HiPhase_variants_concat
+├── benchmarks
+└── final_phasing_output
+```
 
 ## *3. Use PIE to conduct phasing evaluation of different platforms*
 
