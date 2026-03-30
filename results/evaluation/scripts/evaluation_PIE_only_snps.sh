@@ -1,6 +1,6 @@
 source activate pie
 
-### Part1: PacBio HiFi max gene distance 2473538 evaluation only snps
+### Part1: PacBio HiFi evaluation only snps
 
 OUTDIR="../results/only_snps_max_no_sqrt/PacBio_HiFi";
 
@@ -27,7 +27,7 @@ for VCF in $INDIR; do
     --verbose > $OUTDIR/$SAMPLE.pie.2473538.log 2>&1
 done
 
-### Part2: Nanopore R9 max gene distance 2473538 evaluation only snps
+### Part2: Nanopore R9 evaluation only snps
 
 OUTDIR="../results/only_snps_max_no_sqrt/Nanopore_R9";
 
@@ -55,7 +55,7 @@ for VCF in $INDIR; do
 
 done
 
-### Part3: Nanopore R10 max gene distance 2473538 evaluation only snps
+### Part3: Nanopore R10 evaluation only snps
 
 OUTDIR="../results/only_snps_max_no_sqrt/Nanopore_R10";
 
