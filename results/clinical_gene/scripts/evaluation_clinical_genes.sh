@@ -1,9 +1,9 @@
-### PIE evaluation on CMRG genes with 2473538 max gene distance no sqrt with phasing results from commonly used tools
+### PIE evaluation on CMRG genes with phasing results from commonly used tools
 
-source activate pie_no_sqrt
+source activate pie
 
 ### PacBio HiFi
-OUTDIR="../results/max_no_sqrt/PacBio_HiFi"
+OUTDIR="../results/CMRG/PacBio_HiFi"
 if [ ! -d "$OUTDIR" ]; then
   mkdir -p $OUTDIR
 fi
@@ -28,7 +28,7 @@ done
 
 ### Nanopore R9
 
-OUTDIR="../results/max_no_sqrt/Nanopore_R9"
+OUTDIR="../results/CMRG/Nanopore_R9"
 
 if [ ! -d "$OUTDIR" ]; then
   mkdir -p $OUTDIR
@@ -54,7 +54,7 @@ done
 
 ### Nanopore R10
 
-OUTDIR="../results/max_no_sqrt/Nanopore_R10"
+OUTDIR="../results/CMRG/Nanopore_R10"
 
 if [ ! -d "$OUTDIR" ]; then
   mkdir -p $OUTDIR
