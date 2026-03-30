@@ -1,4 +1,4 @@
-source activate pie_no_sqrt
+source activate pie
 
 ### Part1: PacBio HiFi max gene distance 2473538 evaluation
 
