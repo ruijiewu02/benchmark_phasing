@@ -81,12 +81,6 @@ ${absolute_path_of_guppy_basecaller}/ont-guppy-6.5.7/bin/guppy_basecaller \
 fastcat $PATH/hac/bascalling_sup/pass/*.fastq | bgzip > $PATH/data/${sample}.nanopore.R9.fastq.gz
 ```
 
-### 2.2.2 basecalling for `pod5` in R10
-```
-null now
-```
-
-
 ## 3. Use `snakemake` to deal with the upstream workflows of haplotype phasing
 
 ### 3.1 environment perparation
