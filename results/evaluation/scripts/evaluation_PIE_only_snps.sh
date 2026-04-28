@@ -2,7 +2,7 @@ source activate pie
 
 ### Part1: PacBio HiFi evaluation only snps
 
-OUTDIR="../results/only_snps_max_no_sqrt/PacBio_HiFi";
+OUTDIR="../results/only_snps/PacBio_HiFi";
 
 if [ ! -d $OUTDIR ]; then
     mkdir -p $OUTDIR;
@@ -29,7 +29,7 @@ done
 
 ### Part2: Nanopore R9 evaluation only snps
 
-OUTDIR="../results/only_snps_max_no_sqrt/Nanopore_R9";
+OUTDIR="../results/only_snps/Nanopore_R9";
 
 if [ ! -d $OUTDIR ]; then
     mkdir -p $OUTDIR;
@@ -57,7 +57,7 @@ done
 
 ### Part3: Nanopore R10 evaluation only snps
 
-OUTDIR="../results/only_snps_max_no_sqrt/Nanopore_R10";
+OUTDIR="../results/only_snps/Nanopore_R10";
 
 if [ ! -d $OUTDIR ]; then
     mkdir -p $OUTDIR;
