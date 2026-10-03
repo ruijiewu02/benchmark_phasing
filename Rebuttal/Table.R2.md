@@ -1,5 +1,5 @@
 | Sample | Platform | Software | High-confidences region only Phasing F1-score | Whole genome Phasing F1-score | Differences |
-|:---:|:---:|:---:|:---:|:---:|:---:|
+|:---:|:-----:|:---:|:-----:|:-----:|:---:|
 | HG002 | pacbio | HapCUT2 | 0.322359415181275 | 0.320762450138384 | 0.00159696504289097 |
 | HG002 | pacbio | HiPhase | 0.345196444123702 | 0.343924883580599 | 0.00127156054310301 |
 | HG002 | pacbio | LongPhase | 0.318450089034784 | 0.316860903649756 | 0.001589185385028 |
